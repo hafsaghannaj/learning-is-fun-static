@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Learning Is Fun</title>
+    <style>
+      :root {
+        --ink: #18201f;
+        --cream: #fff9f1;
+        --coral: #ff6f61;
+        --sun: #ffd36b;
+        --mint: #5fe0c4;
+        --sky: #5aa9e6;
+        --shadow: rgba(24, 32, 31, 0.12);
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: "Nunito", system-ui, -apple-system, sans-serif;
+        min-height: 100vh;
+        background:
+          radial-gradient(circle at top left, rgba(255, 220, 170, 0.5), transparent 45%),
+          radial-gradient(circle at 80% 10%, rgba(150, 220, 255, 0.35), transparent 40%),
+          radial-gradient(circle at 20% 80%, rgba(170, 255, 210, 0.3), transparent 50%),
+          #f8f6f2;
+        color: var(--ink);
+      }
+
+      main {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 32px 20px 80px;
+        display: flex;
+        flex-direction: column;
+        gap: 56px;
+      }
+
+      .tabs {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        justify-content: center;
+        padding: 14px;
+        background: rgba(255, 255, 255, 0.7);
+        border-radius: 999px;
+        box-shadow: 0 12px 24px var(--shadow);
+        position: sticky;
+        top: 16px;
+        z-index: 10;
+        backdrop-filter: blur(12px);
+      }
+
+      .tab {
+        border: none;
+        background: transparent;
+        font-weight: 700;
+        padding: 10px 18px;
+        border-radius: 999px;
+        cursor: pointer;
+        color: #4f5957;
+        transition: background 0.2s ease, color 0.2s ease;
+      }
+
+      .tab.active {
+        background: var(--sky);
+        color: #fff;
+      }
+
+      .volume {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-weight: 700;
+        color: #4f5957;
+        padding-left: 8px;
+      }
+
+      .volume input[type="range"] {
+        accent-color: var(--coral);
+      }
+
+      .hero {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 24px;
+        align-items: center;
+        padding: 32px;
+        border-radius: 28px;
+        background: rgba(255, 255, 255, 0.7);
+        box-shadow: 0 20px 60px var(--shadow);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .hero::after {
+        content: "";
+        position: absolute;
+        inset: -40% 50% auto auto;
+        width: 240px;
+        height: 240px;
+        background: radial-gradient(circle, rgba(255, 111, 97, 0.4), transparent 70%);
+      }
+
+      .eyebrow {
+        font-family: "Fredoka", "Nunito", sans-serif;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        font-size: 0.85rem;
+        color: #4f5957;
+        margin-bottom: 8px;
+      }
+
+      .hero h1 {
+        font-family: "Fredoka", "Nunito", sans-serif;
+        font-size: clamp(2.2rem, 4vw, 3.6rem);
+        margin: 0 0 12px;
+      }
+
+      .lead {
+        font-size: 1.05rem;
+        color: #4f5957;
+        margin-bottom: 20px;
+      }
+
+      .hero-actions {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+
+      .primary {
+        background: var(--coral);
+        color: #fff;
+        border: none;
+        padding: 12px 22px;
+        border-radius: 999px;
+        font-weight: 700;
+        cursor: pointer;
+        box-shadow: 0 12px 24px rgba(255, 111, 97, 0.25);
+        transition: transform 0.2s ease;
+      }
+
+      .primary:hover {
+        transform: translateY(-2px);
+      }
+
+      .ghost {
+        background: transparent;
+        border: 2px dashed rgba(24, 32, 31, 0.4);
+        padding: 10px 20px;
+        border-radius: 999px;
+        font-weight: 700;
+        cursor: pointer;
+        color: var(--ink);
+      }
+
+      .hero-card {
+        background: var(--cream);
+        border-radius: 24px;
+        padding: 24px;
+        box-shadow: 0 18px 40px rgba(24, 32, 31, 0.1);
+        display: grid;
+        gap: 12px;
+        animation: float 6s ease-in-out infinite;
+      }
+
+      .hero-card__title {
+        font-size: 0.9rem;
+        color: #4f5957;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+      }
+
+      .hero-pill {
+        background: var(--sun);
+        color: #3a2c1f;
+        width: fit-content;
+        padding: 8px 14px;
+        border-radius: 999px;
+        font-weight: 700;
+      }
+
+      .section {
+        display: grid;
+        gap: 20px;
+      }
+
+      .section--home {
+        background: rgba(255, 255, 255, 0.7);
+        border-radius: 24px;
+        padding: 24px;
+        box-shadow: 0 16px 36px var(--shadow);
+      }
+
+      .section-head h2 {
+        font-family: "Fredoka", "Nunito", sans-serif;
+        font-size: clamp(1.6rem, 3vw, 2.4rem);
+        margin: 0 0 6px;
+      }
+
+      .section-head p {
+        color: #4f5957;
+        margin: 0;
+      }
+
+      .home-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 16px;
+      }
+
+      .home-card {
+        text-align: left;
+        border: none;
+        border-radius: 18px;
+        padding: 18px;
+        background: #fff;
+        box-shadow: 0 12px 26px rgba(24, 32, 31, 0.08);
+        cursor: pointer;
+        transition: transform 0.2s ease;
+      }
+
+      .home-card:hover {
+        transform: translateY(-4px);
+      }
+
+      .letters {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(56px, 1fr));
+        gap: 12px;
+      }
+
+      .letter {
+        background: #fff;
+        border: 2px solid transparent;
+        border-radius: 16px;
+        padding: 14px;
+        font-size: 1.2rem;
+        font-weight: 700;
+        cursor: pointer;
+        transition: transform 0.15s ease, border-color 0.15s ease;
+      }
+
+      .letter:hover {
+        transform: translateY(-3px);
+      }
+
+      .letter.active {
+        border-color: var(--sky);
+        transform: translateY(-4px);
+      }
+
+      .letter-detail {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px;
+        align-items: center;
+        padding: 20px;
+        border-radius: 18px;
+        background: rgba(255, 255, 255, 0.7);
+        box-shadow: 0 12px 30px var(--shadow);
+      }
+
+      .detail-label {
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        color: #4f5957;
+        margin: 0 0 4px;
+      }
+
+      .detail-value {
+        font-family: "Fredoka", "Nunito", sans-serif;
+        font-size: 1.4rem;
+        margin: 0;
+      }
+
+      .flashcard {
+        background: #fff;
+        border-radius: 22px;
+        padding: 24px;
+        box-shadow: 0 18px 40px var(--shadow);
+        display: grid;
+        gap: 18px;
+      }
+
+      .flashcard-main {
+        text-align: center;
+      }
+
+      .flashcard-word {
+        font-family: "Fredoka", "Nunito", sans-serif;
+        font-size: 3rem;
+        margin: 0;
+      }
+
+      .flashcard-answer {
+        background: rgba(95, 224, 196, 0.2);
+        border-radius: 16px;
+        padding: 16px;
+        margin-top: 12px;
+        color: #28514a;
+      }
+
+      .flashcard-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .flashcard-nav {
+        display: flex;
+        gap: 8px;
+      }
+
+      .sentence-area {
+        background: rgba(255, 255, 255, 0.75);
+        border-radius: 20px;
+        padding: 18px;
+        min-height: 80px;
+        box-shadow: 0 12px 30px var(--shadow);
+      }
+
+      .sentence-placeholder {
+        color: #6d7674;
+        margin: 0;
+      }
+
+      .sentence-words {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .word-bank {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .word-chip {
+        border: none;
+        padding: 8px 14px;
+        border-radius: 999px;
+        background: #fff;
+        box-shadow: 0 6px 12px rgba(24, 32, 31, 0.08);
+        cursor: pointer;
+        font-weight: 700;
+      }
+
+      .word-chip.active {
+        background: var(--mint);
+        color: #1b3f38;
+      }
+
+      .sentence-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .wordlab {
+        background: #fff;
+        border-radius: 22px;
+        padding: 24px;
+        display: grid;
+        gap: 18px;
+        box-shadow: 0 18px 40px var(--shadow);
+      }
+
+      .wordlab-controls {
+        display: grid;
+        gap: 12px;
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      }
+
+      .wordlab-controls label {
+        display: grid;
+        gap: 6px;
+        font-weight: 700;
+        color: #3f4746;
+      }
+
+      .wordlab-controls select {
+        padding: 10px 12px;
+        border-radius: 12px;
+        border: 2px solid rgba(24, 32, 31, 0.1);
+        background: #fff;
+      }
+
+      .wordlab-result {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 16px;
+        justify-content: space-between;
+      }
+
+      .built-word {
+        font-family: "Fredoka", "Nunito", sans-serif;
+        font-size: 2.6rem;
+        margin: 0;
+      }
+
+      .wordlab-actions {
+        display: flex;
+        gap: 10px;
+      }
+
+      .footer {
+        text-align: center;
+        color: #4f5957;
+      }
+
+      .hidden {
+        display: none;
+      }
+
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-6px);
+        }
+      }
+
+      @media (max-width: 720px) {
+        main {
+          padding: 24px 16px 60px;
+        }
+
+        .tabs {
+          border-radius: 24px;
+          position: static;
+        }
+
+        .flashcard-actions {
+          flex-direction: column;
+          align-items: stretch;
+        }
+
+        .wordlab-result {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <nav class="tabs">
+        <button class="tab active" data-tab="home">Home</button>
+        <button class="tab" data-tab="letters">Letters</button>
+        <button class="tab" data-tab="flashcards">Flashcards</button>
+        <button class="tab" data-tab="sentences">Sentences</button>
+        <button class="tab" data-tab="wordlab">Word Lab</button>
+        <div class="volume">
+          <label for="volume">Volume</label>
+          <input id="volume" type="range" min="0" max="100" value="60" />
+        </div>
+      </nav>
+
+      <header class="hero">
+        <div>
+          <p class="eyebrow">Learning Is Fun</p>
+          <h1>Playful English practice for preschool to grade 3.</h1>
+          <p class="lead">
+            Tap, listen, build, and repeat. Kids explore letters, sounds,
+            flashcards, and sentence building with instant feedback.
+          </p>
+          <div class="hero-actions">
+            <button class="primary" id="title-sound">Hear the title</button>
+            <button class="ghost" id="quick-sentence">Make a quick sentence</button>
+          </div>
+        </div>
+        <div class="hero-card">
+          <p class="hero-card__title">Today</p>
+          <h3>Letters + Sounds</h3>
+          <p>Click a letter to hear it and see a word.</p>
+          <div class="hero-pill">Quick Start</div>
+        </div>
+      </header>
+
+      <section class="section section--home" id="home">
+        <div class="section-head">
+          <h2>Pick a game</h2>
+          <p>Use the tabs to jump into letters, flashcards, and more.</p>
+        </div>
+        <div class="home-grid">
+          <button class="home-card" data-go="letters">
+            <h3>Letters + Sounds</h3>
+            <p>Tap a letter and hear the sound.</p>
+          </button>
+          <button class="home-card" data-go="flashcards">
+            <h3>Flashcards</h3>
+            <p>Flip to see phonics and sentences.</p>
+          </button>
+          <button class="home-card" data-go="sentences">
+            <h3>Build Sentences</h3>
+            <p>Drag words into a sentence.</p>
+          </button>
+          <button class="home-card" data-go="wordlab">
+            <h3>Word Lab</h3>
+            <p>Blend sounds to make new words.</p>
+          </button>
+        </div>
+      </section>
+
+      <section class="section hidden" id="letters">
+        <div class="section-head">
+          <h2>Letters and Sounds</h2>
+          <p>Click a letter. Then practice the sound and word.</p>
+        </div>
+        <div class="letters" id="letters-grid"></div>
+        <div class="letter-detail">
+          <div>
+            <p class="detail-label">Sound</p>
+            <p class="detail-value" id="letter-sound">ah</p>
+          </div>
+          <div>
+            <p class="detail-label">Word</p>
+            <p class="detail-value" id="letter-word">apple</p>
+          </div>
+          <button class="primary" id="say-word">Say the word</button>
+        </div>
+      </section>
+
+      <section class="section hidden" id="flashcards">
+        <div class="section-head">
+          <h2>Flashcards</h2>
+          <p>Flip the card to see the phonics and a sentence.</p>
+        </div>
+        <div class="flashcard">
+          <div class="flashcard-main">
+            <p class="flashcard-word" id="card-word">cat</p>
+            <div class="flashcard-answer hidden" id="card-answer">
+              <p id="card-phonics">Sounds: c-a-t</p>
+              <p id="card-sentence">The cat naps.</p>
+            </div>
+          </div>
+          <div class="flashcard-actions">
+            <button class="ghost" id="toggle-answer">Show answer</button>
+            <button class="primary" id="hear-word">Hear word</button>
+            <div class="flashcard-nav">
+              <button class="ghost" id="prev-card">Prev</button>
+              <button class="ghost" id="next-card">Next</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section hidden" id="sentences">
+        <div class="section-head">
+          <h2>Build a Sentence</h2>
+          <p>Tap words to build a sentence. Tap a word to remove it.</p>
+        </div>
+        <div class="sentence-area" id="sentence-area">
+          <p class="sentence-placeholder">Your sentence goes here.</p>
+        </div>
+        <div class="word-bank" id="word-bank"></div>
+        <div class="sentence-actions">
+          <button class="primary" id="read-sentence">Read sentence</button>
+          <button class="ghost" id="clear-sentence">Clear</button>
+          <button class="ghost" id="surprise-sentence">Surprise me</button>
+        </div>
+      </section>
+
+      <section class="section hidden" id="wordlab">
+        <div class="section-head">
+          <h2>Word Lab</h2>
+          <p>Build a simple word and blend the sounds together.</p>
+        </div>
+        <div class="wordlab">
+          <div class="wordlab-controls">
+            <label>
+              Start
+              <select id="onset"></select>
+            </label>
+            <label>
+              Middle
+              <select id="vowel"></select>
+            </label>
+            <label>
+              End
+              <select id="coda"></select>
+            </label>
+          </div>
+          <div class="wordlab-result">
+            <p class="built-word" id="built-word">bat</p>
+            <div class="wordlab-actions">
+              <button class="primary" id="sound-word">Sound it out</button>
+              <button class="ghost" id="random-word">Random</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <footer class="footer">
+        <p>Built for young readers. Tap, listen, and repeat.</p>
+      </footer>
+    </main>
+
+    <script>
+      const letters = [
+        { letter: "A", sound: "ah", word: "apple" },
+        { letter: "B", sound: "buh", word: "ball" },
+        { letter: "C", sound: "kuh", word: "cat" },
+        { letter: "D", sound: "duh", word: "dog" },
+        { letter: "E", sound: "eh", word: "egg" },
+        { letter: "F", sound: "fff", word: "fish" },
+        { letter: "G", sound: "guh", word: "goat" },
+        { letter: "H", sound: "huh", word: "hat" },
+        { letter: "I", sound: "ih", word: "in" },
+        { letter: "J", sound: "juh", word: "jam" },
+        { letter: "K", sound: "kuh", word: "kite" },
+        { letter: "L", sound: "lll", word: "lion" },
+        { letter: "M", sound: "mmm", word: "moon" },
+        { letter: "N", sound: "nnn", word: "nest" },
+        { letter: "O", sound: "oh", word: "owl" },
+        { letter: "P", sound: "puh", word: "pan" },
+        { letter: "Q", sound: "kwuh", word: "queen" },
+        { letter: "R", sound: "rrr", word: "rain" },
+        { letter: "S", sound: "sss", word: "sun" },
+        { letter: "T", sound: "tuh", word: "top" },
+        { letter: "U", sound: "uh", word: "up" },
+        { letter: "V", sound: "vuh", word: "van" },
+        { letter: "W", sound: "wuh", word: "wig" },
+        { letter: "X", sound: "ks", word: "box" },
+        { letter: "Y", sound: "yuh", word: "yo-yo" },
+        { letter: "Z", sound: "zzz", word: "zip" },
+      ]
+
+      const flashcards = [
+        { word: "cat", phonics: "c-a-t", sentence: "The cat naps." },
+        { word: "ship", phonics: "sh-i-p", sentence: "The ship sails." },
+        { word: "rain", phonics: "r-ai-n", sentence: "Rain taps the roof." },
+        { word: "tree", phonics: "t-r-ee", sentence: "A tree is tall." },
+        { word: "frog", phonics: "f-r-o-g", sentence: "The frog jumps." },
+        { word: "smile", phonics: "s-m-i-le", sentence: "We smile today." },
+        { word: "chair", phonics: "ch-air", sentence: "Sit on the chair." },
+        { word: "glow", phonics: "g-l-ow", sentence: "Stars glow." },
+        { word: "slide", phonics: "s-l-i-de", sentence: "We slide fast." },
+        { word: "stamp", phonics: "s-t-a-m-p", sentence: "Stamp the paper." },
+      ]
+
+      const starters = ["The", "A", "My", "Our", "This"]
+      const verbs = ["likes", "finds", "builds", "sees", "reads"]
+      const objects = ["a kite", "the moon", "a book", "a cake", "the pond"]
+      const extras = ["today", "outside", "after school", "with friends", "every day"]
+
+      const onsets = ["b", "c", "d", "f", "g", "h", "m", "n", "p", "s", "t"]
+      const vowels = ["a", "e", "i", "o", "u"]
+      const codas = ["t", "n", "p", "m", "d", "g", "s", "k", "l", "x"]
+
+      let activeLetter = letters[0]
+      let cardIndex = 0
+      let showAnswer = false
+      let sentenceWords = []
+      let audioCtx
+      let currentVolume = 0.6
+
+      const speak = (text) => {
+        if (!window.speechSynthesis) return
+        const utterance = new SpeechSynthesisUtterance(text)
+        utterance.rate = 0.9
+        window.speechSynthesis.cancel()
+        window.speechSynthesis.speak(utterance)
+      }
+
+      const playTone = (frequency, duration, type) => {
+        const AudioContext = window.AudioContext || window.webkitAudioContext
+        if (!AudioContext || currentVolume <= 0) return
+        if (!audioCtx) audioCtx = new AudioContext()
+        const oscillator = audioCtx.createOscillator()
+        const gainNode = audioCtx.createGain()
+        oscillator.type = type
+        oscillator.frequency.value = frequency
+        gainNode.gain.value = 0.04 * currentVolume
+        oscillator.connect(gainNode)
+        gainNode.connect(audioCtx.destination)
+        oscillator.start()
+        oscillator.stop(audioCtx.currentTime + duration)
+      }
+
+      const playClick = () => playTone(520, 0.06, "triangle")
+      const playPop = () => playTone(720, 0.08, "sine")
+      const playSuccess = () => {
+        playTone(600, 0.07, "sine")
+        setTimeout(() => playTone(900, 0.07, "sine"), 90)
+      }
+
+      const setTab = (tabId) => {
+        document.querySelectorAll("section").forEach((section) => {
+          if (section.id === tabId) {
+            section.classList.remove("hidden")
+          } else {
+            section.classList.add("hidden")
+          }
+        })
+
+        document.querySelectorAll(".tab").forEach((tab) => {
+          tab.classList.toggle("active", tab.dataset.tab === tabId)
+        })
+      }
+
+      const lettersGrid = document.getElementById("letters-grid")
+      const letterSound = document.getElementById("letter-sound")
+      const letterWord = document.getElementById("letter-word")
+
+      letters.forEach((item) => {
+        const button = document.createElement("button")
+        button.className = "letter"
+        button.textContent = item.letter
+        button.addEventListener("click", () => {
+          playPop()
+          activeLetter = item
+          document.querySelectorAll(".letter").forEach((btn) => btn.classList.remove("active"))
+          button.classList.add("active")
+          letterSound.textContent = item.sound
+          letterWord.textContent = item.word
+          speak(`${item.sound}.`)
+        })
+        lettersGrid.appendChild(button)
+      })
+      lettersGrid.querySelector(".letter").classList.add("active")
+
+      const updateCard = () => {
+        const card = flashcards[cardIndex]
+        document.getElementById("card-word").textContent = card.word
+        document.getElementById("card-phonics").textContent = `Sounds: ${card.phonics}`
+        document.getElementById("card-sentence").textContent = card.sentence
+      }
+
+      updateCard()
+
+      const sentenceArea = document.getElementById("sentence-area")
+      const wordBank = document.getElementById("word-bank")
+
+      const renderSentence = () => {
+        sentenceArea.innerHTML = ""
+        if (sentenceWords.length === 0) {
+          const placeholder = document.createElement("p")
+          placeholder.className = "sentence-placeholder"
+          placeholder.textContent = "Your sentence goes here."
+          sentenceArea.appendChild(placeholder)
+          return
+        }
+
+        const wrapper = document.createElement("div")
+        wrapper.className = "sentence-words"
+        sentenceWords.forEach((word, index) => {
+          const chip = document.createElement("button")
+          chip.className = "word-chip active"
+          chip.textContent = word
+          chip.addEventListener("click", () => {
+            sentenceWords.splice(index, 1)
+            renderSentence()
+          })
+          wrapper.appendChild(chip)
+        })
+        sentenceArea.appendChild(wrapper)
+      }
+
+      const bankWords = [...starters, ...verbs, ...objects, ...extras]
+      bankWords.forEach((word) => {
+        const chip = document.createElement("button")
+        chip.className = "word-chip"
+        chip.textContent = word
+        chip.addEventListener("click", () => {
+          playClick()
+          sentenceWords.push(word)
+          renderSentence()
+        })
+        wordBank.appendChild(chip)
+      })
+
+      renderSentence()
+
+      const onsetSelect = document.getElementById("onset")
+      const vowelSelect = document.getElementById("vowel")
+      const codaSelect = document.getElementById("coda")
+      const builtWord = document.getElementById("built-word")
+
+      const populateSelect = (select, list) => {
+        list.forEach((letter) => {
+          const option = document.createElement("option")
+          option.value = letter
+          option.textContent = letter
+          select.appendChild(option)
+        })
+      }
+
+      populateSelect(onsetSelect, onsets)
+      populateSelect(vowelSelect, vowels)
+      populateSelect(codaSelect, codas)
+
+      const updateBuiltWord = () => {
+        builtWord.textContent = `${onsetSelect.value}${vowelSelect.value}${codaSelect.value}`
+      }
+
+      updateBuiltWord()
+      onsetSelect.addEventListener("change", updateBuiltWord)
+      vowelSelect.addEventListener("change", updateBuiltWord)
+      codaSelect.addEventListener("change", updateBuiltWord)
+
+      document.querySelectorAll(".tab").forEach((tab) => {
+        tab.addEventListener("click", () => {
+          playClick()
+          setTab(tab.dataset.tab)
+        })
+      })
+
+      document.getElementById("volume").addEventListener("input", (event) => {
+        currentVolume = Number(event.target.value) / 100
+      })
+
+      document.getElementById("title-sound").addEventListener("click", () => {
+        playSuccess()
+        speak("Learning is fun")
+      })
+
+      document.getElementById("quick-sentence").addEventListener("click", () => {
+        sentenceWords = [
+          starters[Math.floor(Math.random() * starters.length)],
+          verbs[Math.floor(Math.random() * verbs.length)],
+          objects[Math.floor(Math.random() * objects.length)],
+          extras[Math.floor(Math.random() * extras.length)],
+        ]
+        renderSentence()
+        setTab("sentences")
+        playClick()
+      })
+
+      document.getElementById("say-word").addEventListener("click", () => {
+        playSuccess()
+        speak(activeLetter.word)
+      })
+
+      document.getElementById("toggle-answer").addEventListener("click", () => {
+        showAnswer = !showAnswer
+        document.getElementById("card-answer").classList.toggle("hidden", !showAnswer)
+        document.getElementById("toggle-answer").textContent = showAnswer
+          ? "Hide answer"
+          : "Show answer"
+      })
+
+      document.getElementById("hear-word").addEventListener("click", () => {
+        playPop()
+        speak(flashcards[cardIndex].word)
+      })
+
+      document.getElementById("prev-card").addEventListener("click", () => {
+        playClick()
+        showAnswer = false
+        document.getElementById("card-answer").classList.add("hidden")
+        document.getElementById("toggle-answer").textContent = "Show answer"
+        cardIndex = (cardIndex - 1 + flashcards.length) % flashcards.length
+        updateCard()
+      })
+
+      document.getElementById("next-card").addEventListener("click", () => {
+        playClick()
+        showAnswer = false
+        document.getElementById("card-answer").classList.add("hidden")
+        document.getElementById("toggle-answer").textContent = "Show answer"
+        cardIndex = (cardIndex + 1) % flashcards.length
+        updateCard()
+      })
+
+      document.getElementById("read-sentence").addEventListener("click", () => {
+        playSuccess()
+        speak(sentenceWords.join(" "))
+      })
+
+      document.getElementById("clear-sentence").addEventListener("click", () => {
+        playClick()
+        sentenceWords = []
+        renderSentence()
+      })
+
+      document.getElementById("surprise-sentence").addEventListener("click", () => {
+        playClick()
+        sentenceWords = [
+          starters[Math.floor(Math.random() * starters.length)],
+          verbs[Math.floor(Math.random() * verbs.length)],
+          objects[Math.floor(Math.random() * objects.length)],
+          extras[Math.floor(Math.random() * extras.length)],
+        ]
+        renderSentence()
+      })
+
+      document.getElementById("sound-word").addEventListener("click", () => {
+        playPop()
+        speak(builtWord.textContent)
+      })
+
+      document.getElementById("random-word").addEventListener("click", () => {
+        playClick()
+        onsetSelect.value = onsets[Math.floor(Math.random() * onsets.length)]
+        vowelSelect.value = vowels[Math.floor(Math.random() * vowels.length)]
+        codaSelect.value = codas[Math.floor(Math.random() * codas.length)]
+        updateBuiltWord()
+      })
+
+      document.querySelectorAll(".home-card").forEach((card) => {
+        card.addEventListener("click", () => {
+          playClick()
+          setTab(card.dataset.go)
+        })
+      })
+
+      setTab("home")
+    </script>
+  </body>
+</html>
